@@ -1,1 +1,1033 @@
-<!-- ShuYi Calculator v2 - Placeholder -->
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國學數易生命密碼</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+        :root {
+            --color-gold: #E6C068;
+            --color-water: #6BB6FF;
+            --color-fire: #FF6B6B;
+            --color-wood: #7ED99C;
+            --color-earth: #F4D185;
+            --color-bg-dark: #F5F5F0;
+            --color-bg-card: rgba(255, 255, 255, 0.95);
+            --color-text-primary: #4A4A4A;
+            --color-text-secondary: rgba(74, 74, 74, 0.7);
+            --shadow-color: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #FFF9E6 0%, #F5F5F0 50%, #FFF9E6 100%);
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            color: #E6C068;
+            text-shadow: 0 2px 8px rgba(230, 192, 104, 0.3);
+            letter-spacing: 4px;
+        }
+
+        .login-section,
+        .input-section {
+            background: var(--color-bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #E6C068;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            margin-bottom: 30px;
+        }
+
+        .login-section.hidden,
+        .input-section.hidden {
+            display: none;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: #E6C068;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4A4A4A;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #E6C068;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #FFFFFF;
+            color: #4A4A4A;
+            transition: all 0.3s;
+        }
+
+        .form-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23E6C068' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #E6C068;
+            box-shadow: 0 0 0 3px rgba(230, 192, 104, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #E6C068 0%, #D4A84F 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 192, 104, 0.4);
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-header {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: #4A4A4A;
+            padding: 20px;
+            background: var(--color-bg-card);
+            border-radius: 15px;
+            border: 2px solid #E6C068;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .triangle-section {
+            background: var(--color-bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #E6C068;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .triangle-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .triangle-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .triangle-cell {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+            border: 2px solid #E6C068;
+            background: #FFFFFF;
+        }
+
+        .triangle-section-label {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .date-section, .year-section {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .section-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .triangle-cell.star {
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFFFF 100%);
+            border: 3px solid #E6C068;
+            box-shadow: 0 4px 15px rgba(230, 192, 104, 0.3);
+        }
+
+        .triangle-cell.star::before {
+            content: '★';
+            position: absolute;
+            top: -15px;
+            font-size: 1.5rem;
+            color: #E6C068;
+            text-shadow: 0 2px 4px rgba(230, 192, 104, 0.4);
+        }
+
+        .triangle-cell.main {
+            width: 80px;
+            height: 80px;
+            font-size: 2.5rem;
+            border-radius: 50%;
+            border: 4px solid #E6C068;
+            box-shadow: 0 6px 25px rgba(230, 192, 104, 0.35);
+        }
+
+        .triangle-cell .label {
+            position: absolute;
+            bottom: -20px;
+            font-size: 0.7rem;
+            color: var(--color-text-secondary);
+        }
+
+        .groups-section {
+            background: var(--color-bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #E6C068;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .groups-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .groups-section::-webkit-scrollbar-track {
+            background: #F5F5F0;
+            border-radius: 4px;
+        }
+
+        .groups-section::-webkit-scrollbar-thumb {
+            background: #E6C068;
+            border-radius: 4px;
+        }
+
+        .group-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #FFFFFF;
+            border-radius: 8px;
+            border-left: 4px solid #E6C068;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .group-name {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #4A4A4A;
+        }
+
+        .group-numbers {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .group-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #FFFFFF;
+        }
+
+        .info-section {
+            background: var(--color-bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #E6C068;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1.5px solid #E6C068;
+            box-shadow: 0 2px 10px var(--shadow-color);
+        }
+
+        .info-card h3 {
+            color: #4A4A4A;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .element-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: #F5F5F0;
+            border-radius: 6px;
+        }
+
+        .element-name {
+            font-weight: 700;
+        }
+
+        .element-count {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .action-btn {
+            padding: 16px 20px;
+            background: #FFFFFF;
+            color: #4A4A4A;
+            border: 2px solid #E6C068;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .action-btn:hover,
+        .action-btn.active {
+            background: #E6C068;
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(230, 192, 104, 0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .triangle-cell {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .triangle-cell.main {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .action-btn {
+                width: 100%;
+                padding: 14px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>國學數易生命密碼</h1>
+        
+        <div class="input-section" id="inputSection">
+            <form id="birthForm">
+                <div class="form-group">
+                    <label for="name">姓名：</label>
+                    <input type="text" id="name" placeholder="請輸入姓名">
+                </div>
+                
+                <div class="form-group">
+                    <label>性別：</label>
+                    <div style="display: flex; gap: 20px; padding: 12px 0;">
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="radio" name="gender" value="male" style="width: auto; margin-right: 8px;" checked>
+                            <span>男</span>
+                        </label>
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="radio" name="gender" value="female" style="width: auto; margin-right: 8px;">
+                            <span>女</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="birthYear">出生年：</label>
+                        <input type="number" id="birthYear" placeholder="例：1990" min="1900" max="2100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthMonth">出生月：</label>
+                        <select id="birthMonth" required>
+                            <option value="">請選擇</option>
+                            <option value="1">1月</option>
+                            <option value="2">2月</option>
+                            <option value="3">3月</option>
+                            <option value="4">4月</option>
+                            <option value="5">5月</option>
+                            <option value="6">6月</option>
+                            <option value="7">7月</option>
+                            <option value="8">8月</option>
+                            <option value="9">9月</option>
+                            <option value="10">10月</option>
+                            <option value="11">11月</option>
+                            <option value="12">12月</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDay">出生日：</label>
+                        <input type="number" id="birthDay" placeholder="例：15" min="1" max="31" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ziTime">子時：</label>
+                        <select id="ziTime">
+                            <option value="none" selected>無</option>
+                            <option value="early">前子時（B1+1）</option>
+                            <option value="late">後子時（次日）</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="twin">孖胎：</label>
+                        <select id="twin">
+                            <option value="none" selected>無</option>
+                            <option value="elder">大孖（加父生日）</option>
+                            <option value="younger">細孖（加母生日）</option>
+                            <option value="triplet">三孖（自己）</option>
+                            <option value="quad">四孖（加父）</option>
+                            <option value="quint">五孖（加母）</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">生成生命密碼</button>
+            </form>
+        </div>
+
+        <div class="results" id="results">
+            <div class="result-header" id="resultHeader"></div>
+
+            <div class="action-buttons">
+                <button class="action-btn active" data-mode="birth">本命</button>
+                <button class="action-btn" data-mode="year">流年</button>
+                <button class="action-btn" data-mode="month">流月</button>
+                <button class="action-btn" data-mode="day">流日</button>
+                <button class="action-btn" onclick="window.print()">PDF下載</button>
+                <button class="action-btn" onclick="exportToExcel()">Excel匯出</button>
+                <button class="action-btn" onclick="showInputSection()">重新輸入</button>
+            </div>
+
+            <div class="main-content">
+                <div class="triangle-section">
+                    <h2 style="text-align: center; margin-bottom: 20px;">生命訊息表</h2>
+                    <div class="triangle-container" id="triangleContainer"></div>
+                </div>
+
+                <div class="groups-section">
+                    <h2 style="text-align: center; margin-bottom: 20px;">十三組聯合數字</h2>
+                    <div id="groupsContainer"></div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>五行分佈</h3>
+                        <div id="elementsContainer"></div>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #E6C068;">
+                            <strong>理想平衡：</strong> 4 · 3 · 3 · 3 · 3
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <h3>缺失數字</h3>
+                        <div style="margin-bottom: 10px;">
+                            <strong>倒三角缺失：</strong><br>
+                            <span id="triangleMissing"></span>
+                        </div>
+                        <div>
+                            <strong>全盤缺失：</strong><br>
+                            <span id="fullMissing"></span>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <h3>水火沖</h3>
+                        <div style="font-size: 2rem; text-align: center; margin-top: 10px;">
+                            <span id="waterFireConflict"></span> 組
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const elementColors = {
+            1: '#FFB900', 6: '#FFB900',
+            2: '#4A90D9', 7: '#4A90D9',
+            3: '#E84040', 8: '#E84040',
+            4: '#5BAD6F', 9: '#5BAD6F',
+            0: '#8B7355', 5: '#8B7355'
+        };
+
+        const elementNames = {
+            '金': [1, 6],
+            '水': [2, 7],
+            '火': [3, 8],
+            '木': [4, 9],
+            '土': [0, 5]
+        };
+
+        const elementOrders = {
+            1: ['金', '水', '木', '火', '土'],
+            6: ['金', '水', '木', '火', '土'],
+            5: ['金', '水', '木', '火', '土'],
+            2: ['水', '木', '火', '土', '金'],
+            7: ['水', '木', '火', '土', '金'],
+            3: ['火', '土', '金', '水', '木'],
+            8: ['火', '土', '金', '水', '木'],
+            4: ['木', '火', '土', '金', '水'],
+            9: ['木', '火', '土', '金', '水']
+        };
+
+        const elementLabels = ['自己', '子女錢財', '事業伴侶', '官鬼疾病', '父母貴人'];
+        const zodiacAnimals = ['鼠', '牛', '虎', '兔', '龍', '蛇', '馬', '羊', '猴', '雞', '狗', '豬'];
+
+        function reduceToSingleDigit(num) {
+            while (num > 9) {
+                num = num.toString().split('').reduce((sum, d) => sum + parseInt(d), 0);
+            }
+            return num === 0 ? 9 : num;
+        }
+
+        function getZodiac(year) {
+            const baseYear = 1900;
+            const index = (year - baseYear) % 12;
+            return zodiacAnimals[index];
+        }
+
+        function calculateNumbers(B1, B2, B3, B4) {
+            const C1 = reduceToSingleDigit(B1 + B2);
+            const C2 = reduceToSingleDigit(B3 + B4);
+            const C3 = reduceToSingleDigit(C1 + C2);
+            const C4 = reduceToSingleDigit(C2 + C3);
+            const C5 = reduceToSingleDigit(C1 + C3);
+            const E = reduceToSingleDigit(C4 + C5);
+            const F3 = reduceToSingleDigit(B1 + C1);
+            const F2 = reduceToSingleDigit(B2 + C1);
+            const F1 = reduceToSingleDigit(F3 + F2);
+            const F4 = reduceToSingleDigit(B3 + C2);
+            const F5 = reduceToSingleDigit(B4 + C2);
+            const F6 = reduceToSingleDigit(F4 + F5);
+            const A = reduceToSingleDigit(B1 + B4 + C3);
+
+            return { B1, B2, B3, B4, C1, C2, C3, C4, C5, E, F1, F2, F3, F4, F5, F6, A };
+        }
+
+        function calculate13Groups(nums) {
+            return [
+                { name: '父基因', n: [nums.B1, nums.B2, nums.C1] },
+                { name: '母基因', n: [nums.B3, nums.B4, nums.C2] },
+                { name: '主性格', n: [nums.C1, nums.C2, nums.C3] },
+                { name: '過程1', n: [nums.C1, nums.C3, nums.C5] },
+                { name: '過程2', n: [nums.C2, nums.C3, nums.C4] },
+                { name: '子女下屬', n: [nums.C4, nums.C5, nums.E] },
+                { name: '事業過程', n: [nums.B1, nums.C1, nums.F3] },
+                { name: '事業過程', n: [nums.B2, nums.C1, nums.F2] },
+                { name: '朋友財運', n: [nums.F3, nums.F2, nums.F1] },
+                { name: '事業伴侶', n: [nums.B3, nums.C2, nums.F4] },
+                { name: '婚姻過程', n: [nums.B4, nums.C2, nums.F5] },
+                { name: '財健子媳', n: [nums.F4, nums.F5, nums.F6] },
+                { name: '隱藏號', n: [
+                    reduceToSingleDigit(nums.C1 + nums.C1),
+                    reduceToSingleDigit(nums.C2 + nums.C2),
+                    reduceToSingleDigit(nums.C3 + nums.C3)
+                ] }
+            ];
+        }
+
+        function calculateElements(nums) {
+            const all16 = [nums.B1, nums.B2, nums.B3, nums.B4, nums.C1, nums.C2, nums.C3, 
+                          nums.C4, nums.C5, nums.F1, nums.F2, nums.F3, nums.E, nums.F4, nums.F5, nums.F6];
+            
+            const counts = {};
+            for (let elem in elementNames) {
+                counts[elem] = all16.filter(n => elementNames[elem].includes(n)).length;
+            }
+            
+            return counts;
+        }
+
+        function getMissingNumbers(nums) {
+            const triangle7 = [nums.B1, nums.B2, nums.B3, nums.B4, nums.C1, nums.C2, nums.C3];
+            const all16 = [nums.B1, nums.B2, nums.B3, nums.B4, nums.C1, nums.C2, nums.C3, 
+                          nums.C4, nums.C5, nums.F1, nums.F2, nums.F3, nums.E, nums.F4, nums.F5, nums.F6];
+            
+            const triangleMissing = [];
+            const fullMissing = [];
+            
+            for (let i = 1; i <= 9; i++) {
+                if (!triangle7.includes(i)) triangleMissing.push(i);
+                if (!all16.includes(i)) fullMissing.push(i);
+            }
+            
+            return { triangleMissing, fullMissing };
+        }
+
+        function calculateWaterFireConflict(groups) {
+            let conflicts = 0;
+            const water = [2, 7];
+            const fire = [3, 8];
+            
+            groups.forEach(group => {
+                const hasWater = group.n.some(n => water.includes(n));
+                const hasFire = group.n.some(n => fire.includes(n));
+                if (hasWater && hasFire) conflicts++;
+            });
+            
+            return conflicts;
+        }
+
+        function displayTriangle(nums) {
+            const container = document.getElementById('triangleContainer');
+            container.innerHTML = '';
+            
+            const row1 = document.createElement('div');
+            row1.className = 'triangle-row';
+            row1.style.gap = '40px';
+            
+            const dateWrapper = document.createElement('div');
+            dateWrapper.className = 'section-wrapper';
+            const dateLabel = document.createElement('div');
+            dateLabel.className = 'triangle-section-label';
+            dateLabel.textContent = '日曆區         月份區';
+            dateWrapper.appendChild(dateLabel);
+            
+            const dateSection = document.createElement('div');
+            dateSection.className = 'date-section';
+            const b1Cell = createCell(nums.B1, true);
+            b1Cell.innerHTML += '<span class="label">B1</span>';
+            const b2Cell = createCell(nums.B2);
+            b2Cell.innerHTML += '<span class="label">B2</span>';
+            dateSection.appendChild(b1Cell);
+            dateSection.appendChild(b2Cell);
+            dateWrapper.appendChild(dateSection);
+            
+            const yearWrapper = document.createElement('div');
+            yearWrapper.className = 'section-wrapper';
+            const yearLabel = document.createElement('div');
+            yearLabel.className = 'triangle-section-label';
+            yearLabel.textContent = '年份區';
+            yearWrapper.appendChild(yearLabel);
+            
+            const yearSection = document.createElement('div');
+            yearSection.className = 'year-section';
+            const b3Cell = createCell(nums.B3);
+            b3Cell.innerHTML += '<span class="label">B3</span>';
+            const b4Cell = createCell(nums.B4, true);
+            b4Cell.innerHTML += '<span class="label">B4</span>';
+            yearSection.appendChild(b3Cell);
+            yearSection.appendChild(b4Cell);
+            yearWrapper.appendChild(yearSection);
+            
+            row1.appendChild(dateWrapper);
+            row1.appendChild(yearWrapper);
+            
+            const row2 = document.createElement('div');
+            row2.className = 'triangle-row';
+            const c1Cell = createCell(nums.C1);
+            c1Cell.innerHTML += '<span class="label">C1</span>';
+            const c2Cell = createCell(nums.C2);
+            c2Cell.innerHTML += '<span class="label">C2</span>';
+            row2.appendChild(c1Cell);
+            row2.appendChild(c2Cell);
+            
+            const row3 = document.createElement('div');
+            row3.className = 'triangle-row';
+            const c3Cell = createCell(nums.C3);
+            c3Cell.classList.add('main');
+            c3Cell.textContent = nums.C3;
+            c3Cell.innerHTML += '<span class="label">C3</span>';
+            row3.appendChild(c3Cell);
+            
+            const row4 = document.createElement('div');
+            row4.className = 'triangle-row';
+            const c4Cell = createCell(nums.C4);
+            c4Cell.innerHTML += '<span class="label">C4</span>';
+            const c5Cell = createCell(nums.C5);
+            c5Cell.innerHTML += '<span class="label">C5</span>';
+            row4.appendChild(c4Cell);
+            row4.appendChild(c5Cell);
+            
+            const row5 = document.createElement('div');
+            row5.className = 'triangle-row';
+            row5.style.gap = '8px';
+            [
+                { v: nums.F1, l: 'F1' },
+                { v: nums.F2, l: 'F2' },
+                { v: nums.F3, l: 'F3' },
+                { v: nums.E, l: 'E' },
+                { v: nums.F4, l: 'F4' },
+                { v: nums.F5, l: 'F5' },
+                { v: nums.F6, l: 'F6' }
+            ].forEach((item) => {
+                const cell = createCell(item.v);
+                cell.innerHTML += `<span class="label">${item.l}</span>`;
+                row5.appendChild(cell);
+            });
+            
+            container.appendChild(row1);
+            container.appendChild(row2);
+            container.appendChild(row3);
+            container.appendChild(row4);
+            container.appendChild(row5);
+        }
+
+        function createCell(num, isStar = false) {
+            const cell = document.createElement('div');
+            cell.className = 'triangle-cell';
+            if (isStar) cell.classList.add('star');
+            cell.style.color = elementColors[num];
+            cell.textContent = num;
+            return cell;
+        }
+
+        function displayGroups(groups) {
+            const container = document.getElementById('groupsContainer');
+            container.innerHTML = '';
+            
+            groups.forEach((group, idx) => {
+                const item = document.createElement('div');
+                item.className = 'group-item';
+                
+                const name = document.createElement('div');
+                name.className = 'group-name';
+                name.textContent = `組${idx + 1}  ${group.name}`;
+                
+                const numbers = document.createElement('div');
+                numbers.className = 'group-numbers';
+                
+                group.n.forEach((n, i) => {
+                    const numDiv = document.createElement('div');
+                    numDiv.className = 'group-number';
+                    numDiv.textContent = n;
+                    numDiv.style.backgroundColor = elementColors[n];
+                    numbers.appendChild(numDiv);
+                    
+                    if (i < group.n.length - 1) {
+                        const sep = document.createElement('span');
+                        sep.textContent = i === group.n.length - 2 ? '=' : '·';
+                        sep.style.color = '#E6C068';
+                        sep.style.fontSize = '1.5rem';
+                        sep.style.fontWeight = '700';
+                        numbers.appendChild(sep);
+                    }
+                });
+                
+                item.appendChild(name);
+                item.appendChild(numbers);
+                container.appendChild(item);
+            });
+        }
+
+        function displayElements(nums) {
+            const container = document.getElementById('elementsContainer');
+            container.innerHTML = '';
+            
+            const counts = calculateElements(nums);
+            const order = elementOrders[nums.C3];
+            
+            order.forEach((elem, idx) => {
+                const row = document.createElement('div');
+                row.className = 'element-row';
+                
+                const name = document.createElement('span');
+                name.className = 'element-name';
+                name.textContent = `${elem}（${elementLabels[idx]}）`;
+                name.style.color = elementColors[elementNames[elem][0]];
+                
+                const count = document.createElement('span');
+                count.className = 'element-count';
+                count.textContent = counts[elem];
+                count.style.color = elementColors[elementNames[elem][0]];
+                
+                row.appendChild(name);
+                row.appendChild(count);
+                container.appendChild(row);
+            });
+        }
+
+        function displayMissingNumbers(nums) {
+            const missing = getMissingNumbers(nums);
+            
+            document.getElementById('triangleMissing').textContent = 
+                missing.triangleMissing.length > 0 ? missing.triangleMissing.join(', ') : '無';
+            document.getElementById('fullMissing').textContent = 
+                missing.fullMissing.length > 0 ? missing.fullMissing.join(', ') : '無';
+        }
+
+        function displayWaterFireConflict(groups) {
+            const conflicts = calculateWaterFireConflict(groups);
+            document.getElementById('waterFireConflict').textContent = conflicts;
+        }
+
+        let birthData = null;
+
+        document.getElementById('birthForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const year = parseInt(document.getElementById('birthYear').value);
+            const month = parseInt(document.getElementById('birthMonth').value);
+            const day = parseInt(document.getElementById('birthDay').value);
+            
+            if (!year || !month || !day) {
+                alert('請填寫完整的出生日期');
+                return;
+            }
+            
+            const ziTime = document.getElementById('ziTime').value;
+            
+            let B1 = reduceToSingleDigit(day);
+            let B2 = reduceToSingleDigit(month);
+            let B3 = reduceToSingleDigit(Math.floor(year / 100));
+            let B4 = reduceToSingleDigit(year % 100);
+            
+            if (ziTime === 'early') {
+                B1 = reduceToSingleDigit(B1 + 1);
+            }
+            
+            birthData = { year, month, day, B1, B2, B3, B4 };
+            
+            const zodiac = getZodiac(year);
+            document.getElementById('resultHeader').textContent = 
+                `生命訊息：${year}年${month}月${day}日（${zodiac}）`;
+            
+            displayMode('birth');
+            document.getElementById('inputSection').classList.add('hidden');
+            document.getElementById('results').classList.add('active');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('.action-btn[data-mode]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const mode = this.dataset.mode;
+                document.querySelectorAll('.action-btn[data-mode]').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                displayMode(mode);
+            });
+        });
+
+        function displayMode(mode) {
+            if (!birthData) return;
+            
+            let B1, B2, B3, B4;
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth() + 1;
+            const currentDay = now.getDate();
+            
+            if (mode === 'birth') {
+                B1 = birthData.B1;
+                B2 = birthData.B2;
+                B3 = birthData.B3;
+                B4 = birthData.B4;
+            } else if (mode === 'year') {
+                const yearToUse = (currentMonth >= 10) ? currentYear + 1 : currentYear;
+                B1 = birthData.B1;
+                B2 = birthData.B2;
+                B3 = reduceToSingleDigit(Math.floor(yearToUse / 100));
+                B4 = reduceToSingleDigit(yearToUse % 100);
+            } else if (mode === 'month') {
+                const yearToUse = (currentMonth >= 10) ? currentYear + 1 : currentYear;
+                B1 = birthData.B1;
+                B2 = reduceToSingleDigit(birthData.B2 + currentMonth);
+                B3 = reduceToSingleDigit(Math.floor(yearToUse / 100));
+                B4 = reduceToSingleDigit(yearToUse % 100);
+            } else if (mode === 'day') {
+                const yearToUse = (currentMonth >= 10) ? currentYear + 1 : currentYear;
+                B1 = reduceToSingleDigit(birthData.B1 + currentDay);
+                B2 = reduceToSingleDigit(birthData.B2 + currentMonth);
+                B3 = reduceToSingleDigit(Math.floor(yearToUse / 100));
+                B4 = reduceToSingleDigit(yearToUse % 100);
+            }
+            
+            const nums = calculateNumbers(B1, B2, B3, B4);
+            const groups = calculate13Groups(nums);
+            
+            displayTriangle(nums);
+            displayGroups(groups);
+            displayElements(nums);
+            displayMissingNumbers(nums);
+            displayWaterFireConflict(groups);
+        }
+
+        function showInputSection() {
+            document.getElementById('inputSection').classList.remove('hidden');
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('inputSection').scrollIntoView({ behavior: 'smooth' });
+            
+            document.getElementById('birthForm').reset();
+        }
+
+        function exportToExcel() {
+            if (!birthData) return;
+            
+            const nums = calculateNumbers(birthData.B1, birthData.B2, birthData.B3, birthData.B4);
+            const groups = calculate13Groups(nums);
+            const elements = calculateElements(nums);
+            const missing = getMissingNumbers(nums);
+            const conflicts = calculateWaterFireConflict(groups);
+            const zodiac = getZodiac(birthData.year);
+            
+            let csv = '\uFEFF';
+            csv += `國學數易生命密碼報告\n`;
+            csv += `生命訊息：${birthData.year}年${birthData.month}月${birthData.day}日（${zodiac}）\n\n`;
+            
+            csv += `生命訊息表\n`;
+            csv += `日曆區,月份區,,年份區\n`;
+            csv += `B1=${nums.B1},B2=${nums.B2},,B3=${nums.B3},B4=${nums.B4}\n`;
+            csv += `C1=${nums.C1},,C2=${nums.C2}\n`;
+            csv += `C3=${nums.C3}\n`;
+            csv += `C4=${nums.C4},,C5=${nums.C5}\n`;
+            csv += `F1=${nums.F1},F2=${nums.F2},F3=${nums.F3},E=${nums.E},F4=${nums.F4},F5=${nums.F5},F6=${nums.F6}\n\n`;
+            
+            csv += `十三組聯合數字\n`;
+            csv += `組別,名稱,數字1,數字2,結果\n`;
+            groups.forEach((group, idx) => {
+                csv += `組${idx + 1},${group.name},${group.n[0]},${group.n[1]},${group.n[2]}\n`;
+            });
+            csv += `\n`;
+            
+            const order = elementOrders[nums.C3];
+            csv += `五行分佈\n`;
+            csv += `五行,屬性,數量\n`;
+            order.forEach((elem, idx) => {
+                csv += `${elem},${elementLabels[idx]},${elements[elem]}\n`;
+            });
+            csv += `理想平衡：,4,3,3,3,3\n\n`;
+            
+            csv += `缺失數字\n`;
+            csv += `倒三角缺失,${missing.triangleMissing.length > 0 ? missing.triangleMissing.join('、') : '無'}\n`;
+            csv += `全盤缺失,${missing.fullMissing.length > 0 ? missing.fullMissing.join('、') : '無'}\n\n`;
+            
+            csv += `水火沖,${conflicts}組\n`;
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `生命密碼報告_${birthData.year}${birthData.month}${birthData.day}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
