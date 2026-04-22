@@ -1,0 +1,228 @@
+/* ===========================================
+   css/layout.css - 數易命盤計算器 v2.0
+   版面佈局 / 響應式設計
+   =========================================== */
+
+/* ===== 容器 ===== */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 20px 16px 100px;
+}
+
+/* ===== Header ===== */
+.site-header {
+  text-align: center;
+  padding: 32px 0 24px;
+  position: relative;
+}
+.site-header h1 {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  color: var(--color-primary-dark);
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+}
+.site-header .subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  letter-spacing: 2px;
+}
+.cloud-deco {
+  position: absolute;
+  top: 20px;
+  font-size: 2rem;
+  opacity: 0.3;
+  color: var(--color-primary);
+}
+.cloud-deco.left  { left: 10px; }
+.cloud-deco.right { right: 10px; }
+
+/* ===== 輸入區 ===== */
+.input-section {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-card);
+  margin-bottom: 20px;
+}
+.input-section h2 {
+  font-size: 1.1rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 18px;
+  text-align: center;
+}
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.form-group {
+  flex: 1;
+  min-width: 80px;
+}
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-light);
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  font-family: var(--font-main);
+  transition: border-color var(--transition);
+  outline: none;
+}
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--color-primary);
+  background: #fff;
+}
+.btn-calculate {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-top: 6px;
+  transition: all var(--transition);
+  box-shadow: 0 4px 16px rgba(196,114,142,0.30);
+}
+.btn-calculate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(196,114,142,0.40);
+}
+
+/* ===== 結果區 ===== */
+#resultsArea { display: none; }
+#resultsArea.show { display: block; }
+
+.result-section {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 24px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-soft);
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--color-border);
+}
+.section-icon {
+  font-size: 1.4rem;
+}
+.section-header h2 {
+  font-size: 1.15rem;
+  color: var(--color-primary-dark);
+  letter-spacing: 2px;
+}
+
+/* ===== 流年小標籤 ===== */
+.period-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.period-tab {
+  padding: 7px 18px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.88rem;
+  transition: all var(--transition);
+}
+.period-tab.active,
+.period-tab:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* ===== 操作按鈕 ===== */
+.action-section {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+.action-btn {
+  padding: 10px 22px;
+  border: 1.5px solid var(--color-primary);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--color-primary-dark);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+}
+.action-btn:hover {
+  background: var(--color-primary);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(196,114,142,0.25);
+}
+
+/* ===== 底部導航 ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  background: rgba(255,248,249,0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--color-border);
+  padding: 8px 0;
+  z-index: 100;
+}
+.bottom-nav button {
+  flex: 1;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  transition: color var(--transition);
+}
+.bottom-nav button:hover,
+.bottom-nav button.active {
+  color: var(--color-primary-dark);
+}
+
+/* ===== 響應式 ===== */
+@media (min-width: 640px) {
+  .container { padding: 30px 24px 40px; }
+  .form-row   { flex-wrap: nowrap; }
+  .bottom-nav { display: none; }
+  .action-section { justify-content: flex-start; }
+}
+@media (max-width: 400px) {
+  .input-section { padding: 20px 14px; }
+  .result-section { padding: 18px 14px; }
+}
