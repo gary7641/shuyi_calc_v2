@@ -1,0 +1,305 @@
+/* ===========================================
+   css/components.css - 數易命盤計算器 v2.0
+   UI元件樣式: 卡片/圈表/聯合碼/話說行
+   =========================================== */
+
+/* ===== 基本資料卡 ===== */
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.profile-card {
+  background: var(--color-bg-section);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  text-align: center;
+  transition: all var(--transition);
+}
+.profile-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+.profile-card .label {
+  font-size: 0.72rem;
+  color: var(--color-text-light);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.profile-card .value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  color: var(--color-primary-dark);
+}
+.profile-card .sub {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 3px;
+}
+
+/* ===== 倒三角命盤 ===== */
+.chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+.triangle-chart {
+  width: 240px;
+  height: 200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.triangle-chart .tri-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 2px 0;
+}
+.tri-cell {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-text-primary);
+}
+.tri-cell.highlight {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+/* ===== 五行分佈横條 ===== */
+.elements-bar {
+  width: 100%;
+  max-width: 400px;
+}
+.element-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.element-label {
+  width: 30px;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  text-align: right;
+}
+.element-bar-wrap {
+  flex: 1;
+  height: 10px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.element-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.6s ease;
+}
+.element-bar-fill.wood  { background: var(--color-wood); }
+.element-bar-fill.fire  { background: var(--color-fire); }
+.element-bar-fill.earth { background: var(--color-gold); }
+.element-bar-fill.metal { background: #A0A0C0; }
+.element-bar-fill.water { background: var(--color-water); }
+.element-count {
+  width: 24px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ===== 13組聯合碼 ===== */
+.groups-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.group-card {
+  background: var(--color-bg-section);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: box-shadow var(--transition);
+}
+.group-card:hover {
+  box-shadow: var(--shadow-card);
+}
+.group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.group-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.group-nums {
+  display: flex;
+  gap: 6px;
+}
+.group-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: var(--font-serif);
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-border);
+}
+.group-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+.group-code-badge {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+.group-toggle {
+  font-size: 1rem;
+  color: var(--color-primary);
+  transition: transform var(--transition);
+}
+.group-card.expanded .group-toggle {
+  transform: rotate(180deg);
+}
+
+/* 展開內容 */
+.group-content {
+  display: none;
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--color-border);
+}
+.group-card.expanded .group-content {
+  display: block;
+}
+.group-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 12px 0 8px;
+  flex-wrap: wrap;
+}
+.group-tab {
+  padding: 4px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 50px;
+  font-size: 0.78rem;
+  background: transparent;
+  color: var(--color-text-secondary);
+  transition: all var(--transition);
+}
+.group-tab.active, .group-tab:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+.group-panel { display: none; }
+.group-panel.active { display: block; }
+
+.group-panel p, .group-panel li {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 4px;
+}
+.group-panel ul { padding-left: 18px; }
+.panel-positive { border-left: 3px solid var(--color-wood); padding-left: 10px; }
+.panel-negative { border-left: 3px solid var(--color-fire); padding-left: 10px; }
+.panel-traits   { border-left: 3px solid var(--color-gold); padding-left: 10px; }
+
+/* ===== 流年/流月/流日卡 ===== */
+.period-content {
+  display: none;
+}
+.period-content.active {
+  display: block;
+}
+.period-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.period-card {
+  background: var(--color-bg-section);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 8px;
+  text-align: center;
+}
+.period-card .p-label {
+  font-size: 0.72rem;
+  color: var(--color-text-light);
+  margin-bottom: 4px;
+}
+.period-card .p-num {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: var(--font-serif);
+  color: var(--color-primary-dark);
+}
+.period-card .p-name {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}
+
+/* ===== 生命訊息表 ===== */
+.life-msg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin-top: 10px;
+}
+.life-msg-table th {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  padding: 8px 6px;
+  text-align: center;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+}
+.life-msg-table td {
+  padding: 7px 6px;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+.life-msg-table tr:nth-child(even) td {
+  background: rgba(253,232,240,0.3);
+}
+
+/* ===== 加載動畫 ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.result-section {
+  animation: fadeIn 0.4s ease both;
+}
+.result-section:nth-child(2) { animation-delay: 0.08s; }
+.result-section:nth-child(3) { animation-delay: 0.16s; }
+.result-section:nth-child(4) { animation-delay: 0.24s; }
