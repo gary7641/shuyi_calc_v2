@@ -64,6 +64,7 @@ function countElements(numbers) {
 
 // 主函數: 執行全部計算
 function performCalculation() {
+      alert('起盤按鈕已點擊!');
   const year = parseInt(document.getElementById('birthYear').value);
   const month = parseInt(document.getElementById('birthMonth').value);
   const day = parseInt(document.getElementById('birthDay').value);
